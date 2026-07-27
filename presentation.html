@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How It Works</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --card: #1a1d24;
+    --accent: #6c63ff;
+    --accent-soft: #6c63ff33;
+    --text: #f2f2f2;
+    --muted: #9a9ea6;
+    --good: #3ddc97;
+    --warn: #ffb84d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow: hidden;
+  }
+  #deck {
+    width: 100%;
+    max-width: 760px;
+    height: 520px;
+    position: relative;
+  }
+  .slide {
+    position: absolute;
+    inset: 0;
+    background: var(--card);
+    border-radius: 22px;
+    padding: 44px 48px;
+    display: none;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    border: 1px solid #2a2e37;
+  }
+  .slide.active { display: flex; }
+  .slide-kicker {
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .slide h2 {
+    font-size: 1.9rem;
+    margin: 0 0 18px;
+    font-weight: 700;
+  }
+  .slide p, .slide li {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: #d6d8dc;
+  }
+  .slide ul {
+    padding-left: 20px;
+    margin: 0;
+  }
+  .slide li { margin-bottom: 10px; }
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  .flow-step {
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    flex: 1;
+    min-width: 110px;
+    text-align: center;
+  }
+  .flow-arrow {
+    color: var(--accent);
+    font-size: 1.2rem;
+  }
+  .two-col {
+    display: flex;
+    gap: 24px;
+    margin-top: 12px;
+    flex: 1;
+  }
+  .two-col > div { flex: 1; }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 18px;
+  }
+  .stat-box {
+    background: #14161c;
+    border-radius: 14px;
+    padding: 16px;
+    border: 1px solid #2a2e37;
+  }
+  .stat-num {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--good);
+  }
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .badge {
+    display: inline-block;
+    background: #2a2e37;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin: 3px 4px 3px 0;
+  }
+  .slide-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+  }
+  .dots {
+    display: flex;
+    gap: 8px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #3a3e47;
+    cursor: pointer;
+  }
+  .dot.active { background: var(--accent); width: 22px; border-radius: 4px; }
+  .nav-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .nav-btn.secondary {
+    background: transparent;
+    border: 1px solid #3a3e47;
+    color: var(--muted);
+  }
+  #top-bar {
+    width: 100%;
+    max-width: 760px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  #top-bar a { color: var(--muted); text-decoration: none; }
+  #proj-name { color: var(--accent); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div id="top-bar">
+  <span><span id="proj-name">CurrenSee</span> — How It Works</span>
+  <a href="index.html">← Back to app</a>
+</div>
+
+<div id="deck">
+
+  <!-- Slide 1: Overview -->
+  <div class="slide active" data-index="0">
+    <div class="slide-kicker">01 · Overview</div>
+    <h2>What <span id="proj-name-1">CurrenSee</span> Actually Does</h2>
+    <p>A camera looks at an Indian currency note. Within a second, the denomination is spoken aloud — no app install, no sighted assistance needed.</p>
+    <div class="flow-row">
+      <div class="flow-step">📷 Camera captures note</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🧠 Model classifies it</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🔊 Result spoken aloud</div>
+    </div>
+    <p style="margin-top:20px; color:var(--muted); font-size:0.9rem;">Built for accessibility — designed so a visually impaired user can independently verify currency, unaided.</p>
+    <div class="slide-footer">
+      <div class="dots"></div>
+      <button class="nav-btn" onclick="go(1)">Next →</button>
+    </div>
+  </div>
+
+  <!-- Slide 2: Data & Training -->
+  <div class="slide" data-index="1">
+    <div class="slide-kicker">02 · Training the Model</div>
+    <h2>Teaching a Machine to Recognize Notes</h2>
+    <p>The model isn't programmed with rules like "₹500 is purple" — it <em>learns</em> patterns from hundreds of example photos, the same way a person learns to recognize faces by seeing many examples.</p>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-num">8</div><div class="stat-label">classes (₹10–₹2000 + Invalid)</div></div>
+      <div class="stat-box"><div class="stat-num">185</div><div class="stat-label">images per class</div></div>
+      <div class="stat-box"><div class="stat-num">2</div><div class="stat-label">sides, angles & lighting varied</div></div>
+      <div class="stat-box"><div class="stat-num">1</div><div class="stat-label">rejection class for non-notes</div></div>
+    </div>
+    <div class="slide-footer">
+      <div class="dots"></div>
+      <div>
+        <button class="nav-btn secondary" onclick="go(0)">← Back</button>
+        <button class="nav-btn" onclick="go(2)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: Model architecture -->
+  <div class="slide" data-index="2">
+    <div class="slide-kicker">03 · Under the Hood</div>
+    <h2>Transfer Learning, Not From Scratch</h2>
+    <p>Instead of teaching a model to understand images from zero (which needs millions of photos), we start from <strong>MobileNet</strong> — a model already trained on millions of general images — and fine-tune just its final layers on our currency photos.</p>
+    <div class="two-col">
+      <div>
+        <p style="font-weight:600; color:var(--text);">Why this works</p>
+        <ul>
+          <li>Early layers already know edges, colors, textures</li>
+          <li>We only retrain the "what does this pattern mean" layer</li>
+          <li>Needs far fewer images, trains in minutes not days</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-weight:600; color:var(--text);">Tools used</p>
+        <span class="badge">Teachable Machine</span>
+        <span class="badge">MobileNet</span>
+        <span class="badge">TensorFlow.js</span>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <div class="dots"></div>
+      <div>
+        <button class="nav-btn secondary" onclick="go(1)">← Back</button>
+        <button class="nav-btn" onclick="go(3)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Inference pipeline -->
+  <div class="slide" data-index="3">
+    <div class="slide-kicker">04 · Live Prediction Pipeline</div>
+    <h2>From Camera Frame to Spoken Word</h2>
+    <p>Everything below happens <strong>entirely inside the browser</strong> — no server, no internet required once the page has loaded.</p>
+    <div class="flow-row" style="flex-direction:column; align-items:stretch;">
+      <div class="flow-step">1. Webcam frame captured (320×320)</div>
+      <div class="flow-step">2. Fed into MobileNet-based classifier</div>
+      <div class="flow-step">3. Confidence score computed per class</div>
+      <div class="flow-step">4. If below 75% confidence → "try again"</div>
+      <div class="flow-step">5. Otherwise → Speech Synthesis API speaks result</div>
+    </div>
+    <div class="slide-footer">
+      <div class="dots"></div>
+      <div>
+        <button class="nav-btn secondary" onclick="go(2)">← Back</button>
+        <button class="nav-btn" onclick="go(4)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Deployment -->
+  <div class="slide" data-index="4">
+    <div class="slide-kicker">05 · Deployment</div>
+    <h2>Runs Anywhere, No Install Needed</h2>
+    <p>Because it's a webapp — not a native app — anyone can use it by opening a link in their phone's browser.</p>
+    <ul style="margin-top:8px;">
+      <li><strong>Hosting:</strong> Static files served via GitHub Pages / Firebase — no backend server</li>
+      <li><strong>Offline capable:</strong> Once loaded, inference and speech both run fully on-device</li>
+      <li><strong>Cross-platform:</strong> Same code works on Android, iOS, and desktop browsers</li>
+    </ul>
+    <p style="margin-top:18px; color:var(--muted); font-size:0.9rem;">This design choice matters: most people needing this tool already own a smartphone with a screen reader — no separate hardware required to benefit.</p>
+    <div class="slide-footer">
+      <div class="dots"></div>
+      <button class="nav-btn secondary" onclick="go(3)">← Back</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const PROJECT_NAME = "CurrenSee"; // change here, updates everywhere on this page
+document.querySelectorAll("#proj-name, #proj-name-1").forEach(el => el.textContent = PROJECT_NAME);
+
+const slides = document.querySelectorAll(".slide");
+let current = 0;
+
+function renderDots() {
+  document.querySelectorAll(".dots").forEach(dotsEl => {
+    dotsEl.innerHTML = "";
+    slides.forEach((_, i) => {
+      const d = document.createElement("div");
+      d.className = "dot" + (i === current ? " active" : "");
+      d.onclick = () => go(i);
+      dotsEl.appendChild(d);
+    });
+  });
+}
+
+function go(index) {
+  current = index;
+  slides.forEach((s, i) => s.classList.toggle("active", i === index));
+  renderDots();
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight" && current < slides.length - 1) go(current + 1);
+  if (e.key === "ArrowLeft" && current > 0) go(current - 1);
+});
+
+renderDots();
+</script>
+
+</body>
+</html>
