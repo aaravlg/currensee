@@ -3,14 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How It Works</title>
+<title>CurrenSee — How It Works</title>
 <style>
   :root {
-    --bg: #0f1115;
-    --card: #1a1d24;
-    --accent: #6c63ff;
-    --accent-soft: #6c63ff33;
-    --text: #f2f2f2;
+    --bg: #0d0f14;
+    --card: #171a21;
+    --card2: #1d212a;
+    --accent: #7c6dfb;
+    --accent2: #34d8c8;
+    --accent-soft: #7c6dfb2b;
+    --text: #f4f4f6;
     --muted: #9a9ea6;
     --good: #3ddc97;
     --warn: #ffb84d;
@@ -18,8 +20,11 @@
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    font-family: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-    background: var(--bg);
+    font-family: 'Segoe UI', -apple-system, Roboto, Arial, sans-serif;
+    background:
+      radial-gradient(circle at 15% 10%, #7c6dfb22, transparent 40%),
+      radial-gradient(circle at 85% 90%, #34d8c822, transparent 40%),
+      var(--bg);
     color: var(--text);
     min-height: 100vh;
     display: flex;
@@ -31,105 +36,173 @@
   }
   #deck {
     width: 100%;
-    max-width: 760px;
-    height: 520px;
+    max-width: 800px;
+    height: 560px;
     position: relative;
   }
   .slide {
     position: absolute;
     inset: 0;
-    background: var(--card);
-    border-radius: 22px;
-    padding: 44px 48px;
+    background: linear-gradient(160deg, var(--card), var(--card2));
+    border-radius: 24px;
+    padding: 42px 48px;
     display: none;
     flex-direction: column;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    box-shadow: 0 25px 70px rgba(0,0,0,0.5);
     border: 1px solid #2a2e37;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
   }
-  .slide.active { display: flex; }
+  .slide.active { display: flex; opacity: 1; transform: translateY(0); }
   .slide-kicker {
-    color: var(--accent);
-    font-size: 0.8rem;
+    color: var(--accent2);
+    font-size: 0.78rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     margin-bottom: 8px;
   }
   .slide h2 {
-    font-size: 1.9rem;
-    margin: 0 0 18px;
+    font-size: 1.85rem;
+    margin: 0 0 16px;
     font-weight: 700;
+    background: linear-gradient(90deg, #fff, #cfd0ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   .slide p, .slide li {
-    font-size: 1rem;
-    line-height: 1.55;
+    font-size: 0.98rem;
+    line-height: 1.6;
     color: #d6d8dc;
   }
-  .slide ul {
-    padding-left: 20px;
-    margin: 0;
+  .slide ul { padding-left: 20px; margin: 0; }
+  .slide li { margin-bottom: 9px; }
+
+  /* ---- Title slide ---- */
+  .title-slide {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
-  .slide li { margin-bottom: 10px; }
+  .logo-badge {
+    width: 78px; height: 78px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.1rem;
+    margin-bottom: 18px;
+    box-shadow: 0 10px 30px var(--accent-soft);
+  }
+  .title-slide h1 {
+    font-size: 2.6rem;
+    margin: 0 0 6px;
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+  }
+  .title-slide .tagline {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 22px;
+  }
+  .title-slide .exhibition-tag {
+    font-size: 0.78rem;
+    color: var(--accent2);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 26px;
+    font-weight: 600;
+  }
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+    max-width: 560px;
+  }
+  .team-card {
+    background: #14161ccc;
+    border: 1px solid #2a2e37;
+    border-radius: 12px;
+    padding: 10px 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+  .team-card .role {
+    display: block;
+    font-size: 0.68rem;
+    color: var(--muted);
+    font-weight: 400;
+    margin-top: 2px;
+  }
+
+  /* ---- Content helpers ---- */
   .flow-row {
     display: flex;
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
-    margin-top: 20px;
+    margin-top: 18px;
   }
   .flow-step {
     background: var(--accent-soft);
     border: 1px solid var(--accent);
     border-radius: 12px;
-    padding: 12px 16px;
+    padding: 13px 14px;
     font-size: 0.85rem;
     font-weight: 600;
     flex: 1;
-    min-width: 110px;
+    min-width: 120px;
     text-align: center;
   }
-  .flow-arrow {
-    color: var(--accent);
-    font-size: 1.2rem;
-  }
-  .two-col {
-    display: flex;
-    gap: 24px;
-    margin-top: 12px;
-    flex: 1;
-  }
+  .flow-arrow { color: var(--accent2); font-size: 1.3rem; }
+  .flow-col .flow-step { text-align: left; }
+
+  .two-col { display: flex; gap: 26px; margin-top: 10px; flex: 1; }
   .two-col > div { flex: 1; }
+
   .stat-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-top: 18px;
+    gap: 12px;
+    margin-top: 16px;
   }
   .stat-box {
-    background: #14161c;
+    background: #12141a;
     border-radius: 14px;
-    padding: 16px;
+    padding: 15px;
     border: 1px solid #2a2e37;
   }
-  .stat-num {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--good);
-  }
-  .stat-label {
-    font-size: 0.8rem;
-    color: var(--muted);
-    margin-top: 2px;
-  }
+  .stat-num { font-size: 1.55rem; font-weight: 800; color: var(--good); }
+  .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
   .badge {
     display: inline-block;
     background: #2a2e37;
     border-radius: 8px;
-    padding: 4px 10px;
+    padding: 5px 11px;
     font-size: 0.75rem;
-    color: var(--muted);
-    margin: 3px 4px 3px 0;
+    color: #d6d8dc;
+    margin: 3px 5px 3px 0;
+    border: 1px solid #3a3e47;
   }
+
+  .science-callout {
+    margin-top: auto;
+    background: linear-gradient(90deg, #7c6dfb1a, #34d8c81a);
+    border-left: 3px solid var(--accent2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.85rem;
+    color: #d6d8dc;
+  }
+  .science-callout b { color: var(--accent2); }
+
   .slide-footer {
     margin-top: auto;
     display: flex;
@@ -137,36 +210,28 @@
     align-items: center;
     padding-top: 16px;
   }
-  .dots {
-    display: flex;
-    gap: 8px;
-  }
-  .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #3a3e47;
-    cursor: pointer;
-  }
-  .dot.active { background: var(--accent); width: 22px; border-radius: 4px; }
+  .dots { display: flex; gap: 8px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #3a3e47; cursor: pointer; transition: all 0.2s; }
+  .dot.active { background: var(--accent2); width: 24px; border-radius: 4px; }
   .nav-btn {
-    background: var(--accent);
-    color: white;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    color: #0d0f14;
     border: none;
-    padding: 10px 18px;
+    padding: 11px 20px;
     border-radius: 10px;
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
   }
   .nav-btn.secondary {
     background: transparent;
     border: 1px solid #3a3e47;
     color: var(--muted);
+    font-weight: 600;
   }
   #top-bar {
     width: 100%;
-    max-width: 760px;
+    max-width: 800px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -175,130 +240,161 @@
     color: var(--muted);
   }
   #top-bar a { color: var(--muted); text-decoration: none; }
-  #proj-name { color: var(--accent); font-weight: 700; }
+  #proj-name-top { color: var(--accent2); font-weight: 700; }
 </style>
 </head>
 <body>
 
 <div id="top-bar">
-  <span><span id="proj-name">CurrenSee</span> — How It Works</span>
+  <span><span id="proj-name-top">CurrenSee</span> — How It Works</span>
   <a href="index.html">← Back to app</a>
 </div>
 
 <div id="deck">
 
-  <!-- Slide 1: Overview -->
-  <div class="slide active" data-index="0">
-    <div class="slide-kicker">01 · Overview</div>
-    <h2>What <span id="proj-name-1">CurrenSee</span> Actually Does</h2>
-    <p>A camera looks at an Indian currency note. Within a second, the denomination is spoken aloud — no app install, no sighted assistance needed.</p>
+  <!-- Slide 0: Title / Team -->
+  <div class="slide title-slide active" data-index="0">
+<div class="logo-badge" aria-hidden="true">
+  <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Camera Viewfinder / Scan Frame -->
+    <path d="M 10 17 V 13 C 10 11.3 11.3 10 13 10 H 17" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 31 10 H 35 C 36.7 10 38 11.3 38 13 V 17" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 38 31 V 35 C 38 36.7 36.7 38 35 38 H 31" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 17 38 H 13 C 11.3 38 10 36.7 10 35 V 31" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Crisp Rupee (₹) Symbol -->
+    <path d="M 18 16.5 H 30" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round"/>
+    <path d="M 18 21.5 H 28.5" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round"/>
+    <path d="M 21.5 16.5 V 21.5 C 26.5 21.5 26.5 27.5 21.5 27.5" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 21.5 27.5 L 28.5 34" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round"/>
+  </svg>
+</div>
+    <h1 id="proj-name-hero">CurrenSee</h1>
+    <div class="tagline">AI-Powered Currency Recognition for the Visually Impaired</div>
+    <div class="exhibition-tag">Class 9 · Science Exhibition</div>
+    <div class="team-grid">
+      <div class="team-card">Aarav Gianchandani<span class="role">Team Lead</span></div>
+      <div class="team-card">Kalash Gangwani<span class="role">Data Collection</span></div>
+      <div class="team-card">Shreyansh Soni<span class="role">Model Training</span></div>
+      <div class="team-card">Reyaansh Chauhan<span class="role">Model Training</span></div>
+      <div class="team-card">Aavyan Soni<span class="role">Webapp Dev</span></div>
+      <div class="team-card">Shivansh Yadav<span class="role">Webapp Dev</span></div>
+      <div class="team-card">Moksh Bhutoria<span class="role">Use-Case & Impact</span></div>
+      <div class="team-card">Veeraj Singh Bhamra<span class="role">Presentation</span></div>
+    </div>
+    <div class="slide-footer" style="width:100%;">
+      <div class="dots"></div>
+      <button class="nav-btn" onclick="go(1)">Start →</button>
+    </div>
+  </div>
+
+  <!-- Slide 1: Problem / Overview -->
+  <div class="slide" data-index="1">
+    <div class="slide-kicker">01 · The Problem We're Solving</div>
+    <h2>Can You Tell Notes Apart With Your Eyes Closed?</h2>
+    <p>Millions of visually impaired people in India handle currency every day — buying groceries, paying for a rickshaw, receiving change — often having to <b>trust someone else</b> to tell them which note is which.</p>
     <div class="flow-row">
       <div class="flow-step">📷 Camera captures note</div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step">🧠 Model classifies it</div>
+      <div class="flow-step">🧠 AI model classifies it</div>
       <div class="flow-arrow">→</div>
-      <div class="flow-step">🔊 Result spoken aloud</div>
+      <div class="flow-step">🔊 Denomination spoken aloud</div>
     </div>
-    <p style="margin-top:20px; color:var(--muted); font-size:0.9rem;">Built for accessibility — designed so a visually impaired user can independently verify currency, unaided.</p>
+    <div class="science-callout">💡 <b>Real problem, real users</b> — this isn't just a coding exercise, it's a working tool addressing an everyday accessibility gap.</div>
     <div class="slide-footer">
       <div class="dots"></div>
-      <button class="nav-btn" onclick="go(1)">Next →</button>
+      <div><button class="nav-btn secondary" onclick="go(0)">← Back</button> <button class="nav-btn" onclick="go(2)">Next →</button></div>
     </div>
   </div>
 
-  <!-- Slide 2: Data & Training -->
-  <div class="slide" data-index="1">
-    <div class="slide-kicker">02 · Training the Model</div>
-    <h2>Teaching a Machine to Recognize Notes</h2>
-    <p>The model isn't programmed with rules like "₹500 is purple" — it <em>learns</em> patterns from hundreds of example photos, the same way a person learns to recognize faces by seeing many examples.</p>
-    <div class="stat-grid">
-      <div class="stat-box"><div class="stat-num">8</div><div class="stat-label">classes (₹10–₹2000 + Invalid)</div></div>
-      <div class="stat-box"><div class="stat-num">185</div><div class="stat-label">images per class</div></div>
-      <div class="stat-box"><div class="stat-num">2</div><div class="stat-label">sides, angles & lighting varied</div></div>
-      <div class="stat-box"><div class="stat-num">1</div><div class="stat-label">rejection class for non-notes</div></div>
-    </div>
-    <div class="slide-footer">
-      <div class="dots"></div>
-      <div>
-        <button class="nav-btn secondary" onclick="go(0)">← Back</button>
-        <button class="nav-btn" onclick="go(2)">Next →</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Slide 3: Model architecture -->
+  <!-- Slide 2: Data Collection -->
   <div class="slide" data-index="2">
-    <div class="slide-kicker">03 · Under the Hood</div>
-    <h2>Transfer Learning, Not From Scratch</h2>
-    <p>Instead of teaching a model to understand images from zero (which needs millions of photos), we start from <strong>MobileNet</strong> — a model already trained on millions of general images — and fine-tune just its final layers on our currency photos.</p>
+    <div class="slide-kicker">02 · Collecting the Data</div>
+    <h2>Teaching a Machine to "See" Money</h2>
+    <p>Before a machine can recognize anything, it has to be shown many examples — just like how we learn to recognize a friend's face after seeing them a few times.</p>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-num">7</div><div class="stat-label">classes: ₹10, ₹20, ₹50, ₹100, ₹200, ₹500 + Invalid</div></div>
+      <div class="stat-box"><div class="stat-num">200</div><div class="stat-label">images collected per class</div></div>
+      <div class="stat-box"><div class="stat-num">1400</div><div class="stat-label">total training images</div></div>
+      <div class="stat-box"><div class="stat-num">1</div><div class="stat-label">"Invalid" class for non-notes</div></div>
+    </div>
+    <div class="science-callout">🔬 <b>Fair testing:</b> we kept the number of images equal across all classes — an unequal dataset would bias the model toward whichever note it saw most, just like an unfair experiment with uneven trials.</div>
+    <div class="slide-footer">
+      <div class="dots"></div>
+      <div><button class="nav-btn secondary" onclick="go(1)">← Back</button> <button class="nav-btn" onclick="go(3)">Next →</button></div>
+    </div>
+  </div>
+
+  <!-- Slide 3: How the model learns -->
+  <div class="slide" data-index="3">
+    <div class="slide-kicker">03 · The Science of Recognition</div>
+    <h2>How a Machine Learns to Classify Images</h2>
+    <p>A computer doesn't "see" a note the way we do — it sees a grid of numbers (pixel values for color and brightness). The model learns which number patterns tend to appear together for each note.</p>
     <div class="two-col">
       <div>
-        <p style="font-weight:600; color:var(--text);">Why this works</p>
+        <p style="font-weight:700; color:var(--text);">Just like our eyes & brain</p>
         <ul>
-          <li>Early layers already know edges, colors, textures</li>
-          <li>We only retrain the "what does this pattern mean" layer</li>
-          <li>Needs far fewer images, trains in minutes not days</li>
+          <li>Our eyes detect light and color (retina)</li>
+          <li>Our brain recognizes patterns (visual cortex)</li>
+          <li>The model does the same, just with maths instead of neurons</li>
         </ul>
       </div>
       <div>
-        <p style="font-weight:600; color:var(--text);">Tools used</p>
-        <span class="badge">Teachable Machine</span>
-        <span class="badge">MobileNet</span>
-        <span class="badge">TensorFlow.js</span>
+        <p style="font-weight:700; color:var(--text);">Why we didn't start from zero</p>
+        <ul>
+          <li>We reused a model already trained on millions of general images</li>
+          <li>Only fine-tuned it for currency notes — much faster</li>
+          <li>This is called <b>Transfer Learning</b></li>
+        </ul>
       </div>
     </div>
+    <div class="science-callout">🧪 <b>Core concept:</b> Pattern recognition + statistics — the model finds the color, shape, and texture patterns that reliably separate one note from another.</div>
     <div class="slide-footer">
       <div class="dots"></div>
-      <div>
-        <button class="nav-btn secondary" onclick="go(1)">← Back</button>
-        <button class="nav-btn" onclick="go(3)">Next →</button>
-      </div>
+      <div><button class="nav-btn secondary" onclick="go(2)">← Back</button> <button class="nav-btn" onclick="go(4)">Next →</button></div>
     </div>
   </div>
 
-  <!-- Slide 4: Inference pipeline -->
-  <div class="slide" data-index="3">
-    <div class="slide-kicker">04 · Live Prediction Pipeline</div>
-    <h2>From Camera Frame to Spoken Word</h2>
-    <p>Everything below happens <strong>entirely inside the browser</strong> — no server, no internet required once the page has loaded.</p>
-    <div class="flow-row" style="flex-direction:column; align-items:stretch;">
-      <div class="flow-step">1. Webcam frame captured (320×320)</div>
-      <div class="flow-step">2. Fed into MobileNet-based classifier</div>
-      <div class="flow-step">3. Confidence score computed per class</div>
-      <div class="flow-step">4. If below 75% confidence → "try again"</div>
-      <div class="flow-step">5. Otherwise → Speech Synthesis API speaks result</div>
-    </div>
-    <div class="slide-footer">
-      <div class="dots"></div>
-      <div>
-        <button class="nav-btn secondary" onclick="go(2)">← Back</button>
-        <button class="nav-btn" onclick="go(4)">Next →</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Slide 5: Deployment -->
+  <!-- Slide 4: Live pipeline -->
   <div class="slide" data-index="4">
-    <div class="slide-kicker">05 · Deployment</div>
-    <h2>Runs Anywhere, No Install Needed</h2>
-    <p>Because it's a webapp — not a native app — anyone can use it by opening a link in their phone's browser.</p>
-    <ul style="margin-top:8px;">
-      <li><strong>Hosting:</strong> Static files served via GitHub Pages / Firebase — no backend server</li>
-      <li><strong>Offline capable:</strong> Once loaded, inference and speech both run fully on-device</li>
-      <li><strong>Cross-platform:</strong> Same code works on Android, iOS, and desktop browsers</li>
-    </ul>
-    <p style="margin-top:18px; color:var(--muted); font-size:0.9rem;">This design choice matters: most people needing this tool already own a smartphone with a screen reader — no separate hardware required to benefit.</p>
+    <div class="slide-kicker">04 · What Happens When You Scan</div>
+    <h2>From Camera Frame to Spoken Word — Live</h2>
+    <p>All of this happens <b>inside the phone's browser itself</b> — no internet needed once the page is open, and nothing is sent anywhere.</p>
+    <div class="flow-row flow-col" style="flex-direction:column; align-items:stretch;">
+      <div class="flow-step">1️⃣ Camera captures a live frame of the note</div>
+      <div class="flow-step">2️⃣ The trained model checks the pattern against all 7 classes</div>
+      <div class="flow-step">3️⃣ It picks the class it's most confident about</div>
+      <div class="flow-step">4️⃣ If confidence is too low → says "please try again" (avoids wrong guesses)</div>
+      <div class="flow-step">5️⃣ Otherwise → speaks the result aloud instantly</div>
+    </div>
     <div class="slide-footer">
       <div class="dots"></div>
-      <button class="nav-btn secondary" onclick="go(3)">← Back</button>
+      <div><button class="nav-btn secondary" onclick="go(3)">← Back</button> <button class="nav-btn" onclick="go(5)">Next →</button></div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Impact & Deployment -->
+  <div class="slide" data-index="5">
+    <div class="slide-kicker">05 · Impact & Real-World Use</div>
+    <h2>Why This Matters Beyond the Exhibition</h2>
+    <ul>
+      <li><b>No new hardware needed</b> — works on any phone browser people already own</li>
+      <li><b>Works offline</b> after the page loads once — reliable even without good internet</li>
+      <li><b>Pairs with tools already used</b> — like phone screen readers, for a smoother experience</li>
+      <li><b>Extendable</b> — could later support coins, other currencies, or counterfeit-feature checks</li>
+    </ul>
+    <div class="science-callout">🌍 <b>Applied science in action:</b> combining optics (camera), computer science (pattern recognition), and accessibility engineering to solve a genuine everyday problem.</div>
+    <div class="slide-footer">
+      <div class="dots"></div>
+      <button class="nav-btn secondary" onclick="go(4)">← Back</button>
     </div>
   </div>
 
 </div>
 
 <script>
-const PROJECT_NAME = "CurrenSee"; // change here, updates everywhere on this page
-document.querySelectorAll("#proj-name, #proj-name-1").forEach(el => el.textContent = PROJECT_NAME);
+const PROJECT_NAME = "CurrenSee"; // change here — updates every mention on this page
+document.querySelectorAll("#proj-name-top, #proj-name-hero").forEach(el => el.textContent = PROJECT_NAME);
 
 const slides = document.querySelectorAll(".slide");
 let current = 0;

@@ -3,22 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Currency Classifier - Accessibility Demo</title>
+<title>CurrenSee — Currency Note Identifier</title>
 <style>
   :root {
-    --bg: #0f1115;
-    --card: #1a1d24;
-    --accent: #6c63ff;
-    --accent-soft: #6c63ff33;
-    --text: #f2f2f2;
+    --bg: #0d0f14;
+    --card: #171a21;
+    --card2: #1d212a;
+    --accent: #7c6dfb;
+    --accent2: #34d8c8;
+    --accent-soft: #7c6dfb2b;
+    --text: #f4f4f6;
     --muted: #9a9ea6;
     --good: #3ddc97;
+    --warn: #ffb84d;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    font-family: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-    background: var(--bg);
+    font-family: 'Segoe UI', -apple-system, Roboto, Arial, sans-serif;
+    background:
+      radial-gradient(circle at 15% 10%, #7c6dfb22, transparent 40%),
+      radial-gradient(circle at 85% 90%, #34d8c822, transparent 40%),
+      var(--bg);
     color: var(--text);
     min-height: 100vh;
     display: flex;
@@ -26,126 +32,181 @@
     align-items: center;
     padding: 24px 16px 60px;
   }
-  h1 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin: 4px 0 2px;
-    text-align: center;
+
+  .logo-badge {
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+    box-shadow: 0 8px 24px var(--accent-soft);
   }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0 0 4px;
+    text-align: center;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+  }
+
   p.subtitle {
     color: var(--muted);
     font-size: 0.9rem;
-    margin: 0 0 20px;
+    margin: 0 0 24px;
     text-align: center;
   }
+
   #camera-wrap {
     position: relative;
     width: 100%;
     max-width: 420px;
     aspect-ratio: 1 / 1;
     background: #000;
-    border-radius: 20px;
+    border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 0 0 2px var(--accent-soft);
+    border: 1px solid #2a2e37;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 0 1px var(--accent-soft);
   }
+
   #webcam-container video, #webcam-container canvas {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover;
   }
+
   #scan-btn {
-    margin-top: 22px;
+    margin-top: 20px;
     width: 100%;
     max-width: 420px;
-    padding: 18px;
-    font-size: 1.1rem;
-    font-weight: 600;
+    padding: 16px;
+    font-size: 1.05rem;
+    font-weight: 700;
     border: none;
     border-radius: 14px;
-    background: var(--accent);
-    color: white;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    color: #0d0f14;
     cursor: pointer;
-    transition: transform 0.1s ease, opacity 0.2s ease;
+    box-shadow: 0 8px 20px var(--accent-soft);
+    transition: transform 0.15s ease, opacity 0.2s ease, box-shadow 0.15s ease;
   }
-  #scan-btn:active { transform: scale(0.97); }
-  #scan-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-  #lang-toggle {
-    margin-top: 14px;
-    display: flex;
-    gap: 8px;
-    width: 100%;
-    max-width: 420px;
-  }
-  .lang-btn {
-    flex: 1;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #2a2e37;
-    background: transparent;
+  #scan-btn:active { transform: scale(0.98); }
+  #scan-btn:disabled { 
+    opacity: 0.5; 
+    cursor: not-allowed; 
+    background: #2a2e37; 
     color: var(--muted);
-    font-size: 0.85rem;
-    cursor: pointer;
+    box-shadow: none;
   }
-  .lang-btn.active {
-    background: var(--accent-soft);
-    color: var(--text);
-    border-color: var(--accent);
-  }
+
   #result-card {
-    margin-top: 18px;
+    margin-top: 20px;
     width: 100%;
     max-width: 420px;
-    background: var(--card);
-    border-radius: 16px;
-    padding: 18px 20px;
-    min-height: 60px;
+    background: linear-gradient(160deg, var(--card), var(--card2));
+    border-radius: 20px;
+    padding: 20px;
+    min-height: 80px;
+    border: 1px solid #2a2e37;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   }
+
   #result-label {
     font-size: 1.5rem;
     font-weight: 700;
+    color: var(--text);
   }
+
   #result-conf {
-    color: var(--muted);
+    color: var(--accent2);
     font-size: 0.85rem;
+    font-weight: 600;
     margin-top: 4px;
   }
+
+  #all-bars {
+    margin-top: 12px;
+  }
+
   #status {
     color: var(--muted);
     font-size: 0.85rem;
-    margin-top: 10px;
+    margin-top: 14px;
     text-align: center;
     min-height: 18px;
   }
+
   .bar-row {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-top: 6px;
-    font-size: 0.75rem;
+    gap: 10px;
+    margin-top: 8px;
+    font-size: 0.8rem;
     color: var(--muted);
   }
+
   .bar-track {
     flex: 1;
-    height: 6px;
-    background: #2a2e37;
-    border-radius: 4px;
+    height: 8px;
+    background: #12141a;
+    border: 1px solid #2a2e37;
+    border-radius: 6px;
     overflow: hidden;
   }
+
   .bar-fill {
     height: 100%;
-    background: var(--accent);
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 6px;
   }
+
   footer {
-    margin-top: 30px;
-    font-size: 0.75rem;
+    margin-top: 40px;
+    font-size: 0.8rem;
     color: var(--muted);
     text-align: center;
+    line-height: 1.6;
+  }
+
+  #present-link {
+    display: inline-block;
+    margin-top: 6px;
+    color: var(--accent2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+  }
+  #present-link:hover {
+    color: var(--accent);
   }
 </style>
 </head>
 <body>
 
-<h1 id="app-title">Currency Note Identifier</h1>
+<div class="logo-badge" aria-hidden="true">
+  <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Camera Viewfinder / Scan Frame -->
+    <path d="M 10 17 V 13 C 10 11.3 11.3 10 13 10 H 17" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 31 10 H 35 C 36.7 10 38 11.3 38 13 V 17" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 38 31 V 35 C 38 36.7 36.7 38 35 38 H 31" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 17 38 H 13 C 11.3 38 10 36.7 10 35 V 31" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Crisp Rupee (₹) Symbol -->
+    <path d="M 18 16.5 H 30" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round"/>
+    <path d="M 18 21.5 H 28.5" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round"/>
+    <path d="M 21.5 16.5 V 21.5 C 26.5 21.5 26.5 27.5 21.5 27.5" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 21.5 27.5 L 28.5 34" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round"/>
+  </svg>
+</div>
+<h1 id="app-title">CurrenSee</h1>
 <p class="subtitle">Point the camera at a note, then tap Scan</p>
 
 <div id="camera-wrap">
@@ -164,7 +225,7 @@
 
 <footer>
   Runs fully on-device • No data leaves your browser<br>
-  <a id="present-link" href="presentation.html" style="color:var(--accent); text-decoration:none;">How it works →</a>
+  <a id="present-link" href="presentation.html">How it works →</a>
 </footer>
 
 <!-- TensorFlow.js and Teachable Machine image library -->
@@ -172,16 +233,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
 
 <script>
-// ---- CONFIGURE THIS ----
-// Point to your exported model folder (containing model.json, metadata.json, weights.bin)
-// This can be a local relative path (e.g. "./model/") for fully offline use,
-// or a hosted URL if using Teachable Machine's shareable link / Firebase.
 const MODEL_URL = "./model/";
-// -------------------------
-
-// ---- SINGLE POINT PROJECT NAME CONFIG ----
 const PROJECT_NAME = "CurrenSee";
-// -------------------------------------------
 
 let model, webcam, maxPredictions;
 let isScanning = false;
@@ -193,7 +246,7 @@ const resultConf = document.getElementById("result-conf");
 const allBars = document.getElementById("all-bars");
 const statusEl = document.getElementById("status");
 
-const CONFIDENCE_THRESHOLD = 0.75; // below this, ask user to try again
+const CONFIDENCE_THRESHOLD = 0.75;
 
 function loadVoices() {
   voices = window.speechSynthesis.getVoices();
@@ -212,9 +265,9 @@ async function init() {
     maxPredictions = model.getTotalClasses();
 
     statusEl.textContent = "Requesting camera access…";
-    const flip = false; // set true if using front-facing camera and want mirror
+    const flip = false;
     webcam = new tmImage.Webcam(320, 320, flip);
-    await webcam.setup({ facingMode: "environment" }); // rear camera on phones
+    await webcam.setup({ facingMode: "environment" });
     await webcam.play();
     document.getElementById("webcam-container").appendChild(webcam.canvas);
 
@@ -285,7 +338,7 @@ function renderBars(predictions) {
 
 function speak(text) {
   if (!("speechSynthesis" in window)) return;
-  window.speechSynthesis.cancel(); // stop any ongoing speech
+  window.speechSynthesis.cancel();
   const utter = new SpeechSynthesisUtterance(text);
   utter.rate = 0.95;
   utter.lang = "en-IN";
