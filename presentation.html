@@ -36,8 +36,8 @@
   }
   #deck {
     width: 100%;
-    max-width: 800px;
-    height: 560px;
+    max-width: 1000px;
+    height: min(620px, 84vh);
     position: relative;
   }
   .slide {
@@ -45,7 +45,7 @@
     inset: 0;
     background: linear-gradient(160deg, var(--card), var(--card2));
     border-radius: 24px;
-    padding: 42px 48px;
+    padding: 40px 52px 0;
     display: none;
     flex-direction: column;
     box-shadow: 0 25px 70px rgba(0,0,0,0.5);
@@ -53,8 +53,19 @@
     opacity: 0;
     transform: translateY(10px);
     transition: opacity 0.35s ease, transform 0.35s ease;
+    overflow: hidden;
   }
   .slide.active { display: flex; opacity: 1; transform: translateY(0); }
+  .slide-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 6px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .slide-scroll::-webkit-scrollbar { width: 6px; }
+  .slide-scroll::-webkit-scrollbar-thumb { background: #3a3e47; border-radius: 4px; }
   .slide-kicker {
     color: var(--accent2);
     font-size: 0.78rem;
@@ -81,7 +92,7 @@
   .slide li { margin-bottom: 9px; }
 
   /* ---- Title slide ---- */
-  .title-slide {
+  .title-slide .slide-scroll {
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -204,11 +215,13 @@
   .science-callout b { color: var(--accent2); }
 
   .slide-footer {
-    margin-top: auto;
+    flex-shrink: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 16px;
+    padding: 16px 0 26px;
+    border-top: 1px solid #2a2e37;
+    margin-top: 12px;
   }
   .dots { display: flex; gap: 8px; }
   .dot { width: 8px; height: 8px; border-radius: 50%; background: #3a3e47; cursor: pointer; transition: all 0.2s; }
@@ -254,6 +267,7 @@
 
   <!-- Slide 0: Title / Team -->
   <div class="slide title-slide active" data-index="0">
+  <div class="slide-scroll">
 <div class="logo-badge" aria-hidden="true">
   <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
     <!-- Camera Viewfinder / Scan Frame -->
@@ -282,6 +296,7 @@
       <div class="team-card">Moksh Bhutoria<span class="role">Use-Case & Impact</span></div>
       <div class="team-card">Veeraj Singh Bhamra<span class="role">Presentation</span></div>
     </div>
+  </div>
     <div class="slide-footer" style="width:100%;">
       <div class="dots"></div>
       <button class="nav-btn" onclick="go(1)">Start →</button>
@@ -290,6 +305,7 @@
 
   <!-- Slide 1: Problem / Overview -->
   <div class="slide" data-index="1">
+   <div class="slide-scroll">
     <div class="slide-kicker">01 · The Problem We're Solving</div>
     <h2>Can You Tell Notes Apart With Your Eyes Closed?</h2>
     <p>Millions of visually impaired people in India handle currency every day — buying groceries, paying for a rickshaw, receiving change — often having to <b>trust someone else</b> to tell them which note is which.</p>
@@ -301,6 +317,7 @@
       <div class="flow-step">🔊 Denomination spoken aloud</div>
     </div>
     <div class="science-callout">💡 <b>Real problem, real users</b> — this isn't just a coding exercise, it's a working tool addressing an everyday accessibility gap.</div>
+   </div>
     <div class="slide-footer">
       <div class="dots"></div>
       <div><button class="nav-btn secondary" onclick="go(0)">← Back</button> <button class="nav-btn" onclick="go(2)">Next →</button></div>
@@ -309,6 +326,7 @@
 
   <!-- Slide 2: Data Collection -->
   <div class="slide" data-index="2">
+   <div class="slide-scroll">
     <div class="slide-kicker">02 · Collecting the Data</div>
     <h2>Teaching a Machine to "See" Money</h2>
     <p>Before a machine can recognize anything, it has to be shown many examples — just like how we learn to recognize a friend's face after seeing them a few times.</p>
@@ -319,6 +337,7 @@
       <div class="stat-box"><div class="stat-num">1</div><div class="stat-label">"Invalid" class for non-notes</div></div>
     </div>
     <div class="science-callout">🔬 <b>Fair testing:</b> we kept the number of images equal across all classes — an unequal dataset would bias the model toward whichever note it saw most, just like an unfair experiment with uneven trials.</div>
+   </div>
     <div class="slide-footer">
       <div class="dots"></div>
       <div><button class="nav-btn secondary" onclick="go(1)">← Back</button> <button class="nav-btn" onclick="go(3)">Next →</button></div>
@@ -327,6 +346,7 @@
 
   <!-- Slide 3: How the model learns -->
   <div class="slide" data-index="3">
+   <div class="slide-scroll">
     <div class="slide-kicker">03 · The Science of Recognition</div>
     <h2>How a Machine Learns to Classify Images</h2>
     <p>A computer doesn't "see" a note the way we do — it sees a grid of numbers (pixel values for color and brightness). The model learns which number patterns tend to appear together for each note.</p>
@@ -349,15 +369,52 @@
       </div>
     </div>
     <div class="science-callout">🧪 <b>Core concept:</b> Pattern recognition + statistics — the model finds the color, shape, and texture patterns that reliably separate one note from another.</div>
+   </div>
     <div class="slide-footer">
       <div class="dots"></div>
       <div><button class="nav-btn secondary" onclick="go(2)">← Back</button> <button class="nav-btn" onclick="go(4)">Next →</button></div>
     </div>
   </div>
 
-  <!-- Slide 4: Live pipeline -->
+  <!-- Slide 4: AI Concepts -->
   <div class="slide" data-index="4">
-    <div class="slide-kicker">04 · What Happens When You Scan</div>
+   <div class="slide-scroll">
+    <div class="slide-kicker">04 · AI Concepts Behind the Project</div>
+    <h2>The AI Vocabulary Behind CurrenSee</h2>
+    <p>Our project isn't just an app — it's a real application of core Artificial Intelligence ideas, the same ones covered in the CBSE AI curriculum.</p>
+    <div class="two-col">
+      <div>
+        <p style="font-weight:700; color:var(--text);">Key AI terms in our project</p>
+        <ul>
+          <li><b>Classification Problem</b> — our AI sorts an image into one of several fixed categories (₹10, ₹20…, Invalid), rather than predicting a number</li>
+          <li><b>Supervised Learning</b> — we trained the model using labeled examples (we told it "this photo = ₹100")</li>
+          <li><b>Neural Network</b> — layers of connected nodes that adjust their internal weights while learning, loosely inspired by neurons in the brain</li>
+          <li><b>Training vs Testing Data</b> — one set to teach the model, a separate unseen set to fairly check how well it learned</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-weight:700; color:var(--text);">Mapped to the AI Project Cycle</p>
+        <div class="flow-row flow-col" style="flex-direction:column; align-items:stretch; margin-top:8px;">
+          <div class="flow-step" style="text-align:left;">🎯 Problem Scoping — accessibility for the visually impaired</div>
+          <div class="flow-step" style="text-align:left;">📦 Data Acquisition — Kaggle dataset + our own photos</div>
+          <div class="flow-step" style="text-align:left;">🔍 Data Exploration — curating, balancing, cleaning images</div>
+          <div class="flow-step" style="text-align:left;">⚙️ Modelling — training via Teachable Machine (MobileNet)</div>
+          <div class="flow-step" style="text-align:left;">✅ Evaluation — testing accuracy on unseen images</div>
+        </div>
+      </div>
+    </div>
+    <div class="science-callout">🤖 <b>Big idea:</b> AI doesn't mean the computer "understands" money the way we do — it means the computer found statistical patterns in data that reliably predict the right answer, and gets better with more and better examples.</div>
+   </div>
+    <div class="slide-footer">
+      <div class="dots"></div>
+      <div><button class="nav-btn secondary" onclick="go(3)">← Back</button> <button class="nav-btn" onclick="go(5)">Next →</button></div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Live pipeline -->
+  <div class="slide" data-index="5">
+   <div class="slide-scroll">
+    <div class="slide-kicker">05 · What Happens When You Scan</div>
     <h2>From Camera Frame to Spoken Word — Live</h2>
     <p>All of this happens <b>inside the phone's browser itself</b> — no internet needed once the page is open, and nothing is sent anywhere.</p>
     <div class="flow-row flow-col" style="flex-direction:column; align-items:stretch;">
@@ -367,15 +424,17 @@
       <div class="flow-step">4️⃣ If confidence is too low → says "please try again" (avoids wrong guesses)</div>
       <div class="flow-step">5️⃣ Otherwise → speaks the result aloud instantly</div>
     </div>
+   </div>
     <div class="slide-footer">
       <div class="dots"></div>
-      <div><button class="nav-btn secondary" onclick="go(3)">← Back</button> <button class="nav-btn" onclick="go(5)">Next →</button></div>
+      <div><button class="nav-btn secondary" onclick="go(4)">← Back</button> <button class="nav-btn" onclick="go(6)">Next →</button></div>
     </div>
   </div>
 
-  <!-- Slide 5: Impact & Deployment -->
-  <div class="slide" data-index="5">
-    <div class="slide-kicker">05 · Impact & Real-World Use</div>
+  <!-- Slide 6: Impact & Deployment -->
+  <div class="slide" data-index="6">
+   <div class="slide-scroll">
+    <div class="slide-kicker">06 · Impact & Real-World Use</div>
     <h2>Why This Matters Beyond the Exhibition</h2>
     <ul>
       <li><b>No new hardware needed</b> — works on any phone browser people already own</li>
@@ -384,9 +443,10 @@
       <li><b>Extendable</b> — could later support coins, other currencies, or counterfeit-feature checks</li>
     </ul>
     <div class="science-callout">🌍 <b>Applied science in action:</b> combining optics (camera), computer science (pattern recognition), and accessibility engineering to solve a genuine everyday problem.</div>
+   </div>
     <div class="slide-footer">
       <div class="dots"></div>
-      <button class="nav-btn secondary" onclick="go(4)">← Back</button>
+      <button class="nav-btn secondary" onclick="go(5)">← Back</button>
     </div>
   </div>
 
